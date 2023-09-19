@@ -11,12 +11,20 @@
 ;; used in this configuration.
 (use-modules (gnu))
 (use-service-modules cups desktop networking ssh xorg)
+;; Import nonfree linux module.
+(use-modules (nongnu packages linux)
+             (nongnu system linux-initrd))
 
 (operating-system
   (locale "en_US.utf8")
   (timezone "Asia/Shanghai")
   (keyboard-layout (keyboard-layout "us"))
   (host-name "guix-test")
+
+  ;; Using the standard Linux kernel and nonfree firmware
+  (kernel linux)
+  (initrd microcode-initrd)
+  (firmware (list linux-firmware))
 
   ;; The list of user accounts ('root' is implicit).
   (users (cons* (user-account
@@ -40,17 +48,25 @@
   ;; Below is the list of system services.  To search for available
   ;; services, run 'guix system search KEYWORD' in a terminal.
   (services
-   (append (list
+   (append
+    (list
+      ;; To configure OpenSSH, pass an 'openssh-configuration'
+      ;; record as a second argument to 'service' below.
+      (service openssh-service-type)
 
-                 ;; To configure OpenSSH, pass an 'openssh-configuration'
-                 ;; record as a second argument to 'service' below.
-                 (service openssh-service-type)
-                 (set-xorg-configuration
-                  (xorg-configuration (keyboard-layout keyboard-layout))))
+      (set-xorg-configuration
+       (xorg-configuration (keyboard-layout keyboard-layout))))
 
-           ;; This is the default list of services we
-           ;; are appending to.
-           %desktop-services))
+      ;; Using the substitute server of SJTU to speed up the download.
+      (modify-services %desktop-services
+      	(guix-service-type
+      	 config => (guix-configuration
+      	(inherit config)
+      	(substitute-urls '("https://mirror.sjtu.edu.cn/guix/" "https://ci.guix.gnu.org")))))
+
+      ;; This is the default list of services we
+      ;; are appending to.
+      %desktop-services))
   (bootloader (bootloader-configuration
                 (bootloader grub-bootloader)
                 (targets (list "/dev/sda"))
