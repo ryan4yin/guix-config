@@ -57,16 +57,14 @@
       (set-xorg-configuration
        (xorg-configuration (keyboard-layout keyboard-layout))))
 
+      ;; This is the default list of services we
       ;; Using the substitute server of SJTU to speed up the download.
       (modify-services %desktop-services
       	(guix-service-type
       	 config => (guix-configuration
       	(inherit config)
-      	(substitute-urls '("https://mirror.sjtu.edu.cn/guix/" "https://ci.guix.gnu.org")))))
+      	(substitute-urls '("https://mirror.sjtu.edu.cn/guix/" "https://ci.guix.gnu.org")))))))
 
-      ;; This is the default list of services we
-      ;; are appending to.
-      %desktop-services))
   (bootloader (bootloader-configuration
                 (bootloader grub-bootloader)
                 (targets (list "/dev/sda"))
