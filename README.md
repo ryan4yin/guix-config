@@ -7,8 +7,8 @@ My dotfiles for GNU Guix
 
 Tutorials for Guile Scheme Language:
 
-- [Guile 3.0 Manual](https://www.gnu.org/software/guile/manual/)
-- [A Scheme Primer](https://spritely.institute/static/papers/scheme-primer.html)
+- [ ] [Guile 3.0 Manual](https://www.gnu.org/software/guile/manual/): in reading
+- [x] [A Scheme Primer](https://spritely.institute/static/papers/scheme-primer.html): read
 
 How to practice Guile Scheme Language(on NixOS):
 
