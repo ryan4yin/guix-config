@@ -38,11 +38,16 @@
   ;; Packages installed system-wide.  Users can also install packages
   ;; under their own account: use 'guix search KEYWORD' to search
   ;; for packages and 'guix install PACKAGE' to install a package.
-  (packages (append (list (specification->package "i3-wm")
-                          (specification->package "i3status")
-                          (specification->package "dmenu")
-                          (specification->package "st")
-                          (specification->package "nss-certs"))
+  ;; Add a bunch of window managers; we can choose one at
+  ;; the log-in screen with F1.
+  (packages (append (list
+                     ;; window managers
+                     ratpoison i3-wm i3status dmenu
+                     emacs emacs-exwm emacs-desktop-environment
+                     ;; terminal emulator
+                     xterm
+                     ;; for HTTPS access
+                     nss-certs)
                     %base-packages))
 
   ;; Below is the list of system services.  To search for available
