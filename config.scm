@@ -44,7 +44,8 @@
                      ;; window managers
                      ratpoison i3-wm i3status dmenu
                      emacs emacs-exwm emacs-desktop-environment
-                     ;; terminal emulator
+                     make neovim git kitty ncurses-with-tinfo
+                    ;; terminal emulator
                      xterm
                      ;; for HTTPS access
                      nss-certs)
