@@ -48,6 +48,10 @@ scheme@(guile-user)> (cons 1 2)
 $9 = (1 . 2)
 ```
 
+## Guix Mirror in China
+
+<https://mirror.sjtu.edu.cn/docs/guix>
+
 ## FAQ
 
 ### 1. In which scenarios should I use `cons*` instead of `list` / `cons`?
@@ -82,7 +86,9 @@ $15 = (1 2 3 4 5 6)
 
 1. docs for `use-modules`: it's provided by guile, see <https://www.gnu.org/software/guile/manual/html_node/Using-Modules.html>
 1. docs for `use-service-modules`, `use-package-modules` & `use-system-modules`: No docs for them. But you can read their definition in source code: <https://git.savannah.gnu.org/cgit/guix.git/tree/gnu.scm#n143>
-1. Source code: <https://git.savannah.gnu.org/cgit/guix.git/tree/>
+1. Source code:
+   1. <https://git.savannah.gnu.org/cgit/guix.git/tree/>
+   1. <https://github.com/nonguix/nonguix/tree/master/nongnu>
 
 ### 4. Why `guix pull` so slow?(stuck in `computing guix derivation`)
 
