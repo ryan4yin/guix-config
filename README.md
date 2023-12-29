@@ -70,3 +70,34 @@ $14 = (1 2 3 (4 5 6))
 scheme@(guile-user) [1]> (cons* 1 2 3 (list 4 5 6))
 $15 = (1 2 3 4 5 6)
 ```
+
+### 2. How to install package vai `config.scm`?
+
+1. `guix search <package-name>` to find the package's location.
+   1. For example, `guix search kitty` will show the package's location is `gnu/packages/terminals.scm`.
+1. add `(use-package-modules terminals)` to the top of `config.scm`.
+1. add `kitty` to the `packages` list in `config.scm`.
+
+### 3. Documentation?
+
+1. docs for `use-modules`: it's provided by guile, see <https://www.gnu.org/software/guile/manual/html_node/Using-Modules.html>
+1. docs for `use-service-modules`, `use-package-modules` & `use-system-modules`: No docs for them. But you can read their definition in source code: <https://git.savannah.gnu.org/cgit/guix.git/tree/gnu.scm#n143>
+1. Source code: <https://git.savannah.gnu.org/cgit/guix.git/tree/>
+
+### 4. Why `guix pull` so slow?(stuck in `computing guix derivation`)
+
+> https://guix.gnu.org/manual/en/html_node/Channels-with-Substitutes.html
+
+When running `guix pull`, Guix will first compile the definitions of every available package. This is an expensive operation for which substitutes (see Substitutes) may be available.
+
+As for nonguix, you can add its official substitutes to speed up the `guix pull` process, search 'substitutes' in <https://gitlab.com/nonguix/nonguix> for details.
+
+> In NixOS, `nix` has no compilation phase and is a fully interpreted language, so `nix flake update` is much faster than `guix pull`.
+
+The substitutes you added into `config.scm` will only be available after the first `guix system reconfigure` finished!
+To speed up the first reconfigure, see nonuix's official README for details.
+
+#### 5. `guix system reconfigure` so slow?(stuck in `build phase`)
+
+Same as above, you can add nonguix's substitutes to speed up the `guix system reconfigure` process.
+

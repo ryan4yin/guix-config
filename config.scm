@@ -11,8 +11,6 @@
 ;; used in this configuration.
 (use-modules (gnu) (gnu system nss))
 (use-service-modules cups desktop networking ssh xorg)
-(use-package-modules bootloaders certs emacs emacs-xyz ratpoison suckless wm
-                     xorg)
 
 ;; Import nonfree linux module.
 (use-modules (nongnu packages linux)
@@ -43,15 +41,16 @@
   ;; for packages and 'guix install PACKAGE' to install a package.
   ;; Add a bunch of window managers; we can choose one at
   ;; the log-in screen with F1.
-  (packages (append (list
+  (packages (append (map specification->package '(
+                     "tcpdump"
                      ;; window managers
-                     ratpoison i3-wm i3status dmenu
-                     emacs emacs-exwm emacs-desktop-environment
-                     make neovim git kitty ncurses-with-tinfo
+                     "ratpoison" "i3-wm" "i3status" "dmenu"
+                     "emacs" "emacs-exwm" "emacs-desktop-environment"
+                     "make" "neovim" "git" "kitty" "ncurses-with-tinfo"
                     ;; terminal emulator
-                     xterm
+                     "xterm"
                      ;; for HTTPS access
-                     nss-certs)
+                     "nss-certs"))
                     %base-packages))
 
   ;; Below is the list of system services.  To search for available
@@ -72,7 +71,16 @@
       	(guix-service-type
       	 config => (guix-configuration
       	(inherit config)
-      	(substitute-urls '("https://mirror.sjtu.edu.cn/guix/" "https://ci.guix.gnu.org")))))))
+      	(substitute-urls '(
+      	                   ;; official substitute's mirror in China
+      	                   "https://mirror.sjtu.edu.cn/guix/"
+      	                   ;; nonguix's official substitute
+      	                   "https://substitutes.nonguix.org"
+      	                   ;; official substitute
+      	                   "https://ci.guix.gnu.org")
+        (authorized-keys
+                (append (list (local-file "./signing-key.pub"))
+                  %default-authorized-guix-keys)))))))
 
   (bootloader (bootloader-configuration
                 (bootloader grub-bootloader)
