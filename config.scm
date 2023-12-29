@@ -9,8 +9,11 @@
 
 ;; Indicate which modules to import to access the variables
 ;; used in this configuration.
-(use-modules (gnu))
+(use-modules (gnu) (gnu system nss))
 (use-service-modules cups desktop networking ssh xorg)
+(use-package-modules bootloaders certs emacs emacs-xyz ratpoison suckless wm
+                     xorg)
+
 ;; Import nonfree linux module.
 (use-modules (nongnu packages linux)
              (nongnu system linux-initrd))
