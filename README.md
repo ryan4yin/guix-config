@@ -21,6 +21,11 @@ Tutorials for Guix itself:
 - [GNU Guix Reference Manual](https://guix.gnu.org/en/manual/en/guix.html): read this first for installation and basic usage & setup.
 - [GNU Guix Cookbook](https://guix.gnu.org/en/cookbook/en/guix-cookbook.html): read this after you have your Guix installed and have some basic knowledge about Guix.
 
+## Key community projects
+
+- <https://github.com/abcdw/rde>
+- <https://github.com/nonguix/nonguix>
+
 ## Notes
 
 1. `'a`: a syntax sugar of `(quote a)`, a symbol `a` is not evaluated.
@@ -47,6 +52,10 @@ $8 = (1 2)
 scheme@(guile-user)> (cons 1 2)
 $9 = (1 . 2)
 ```
+
+## Guix Mirror in China
+
+<https://mirror.sjtu.edu.cn/docs/guix>
 
 ## FAQ
 
@@ -82,7 +91,9 @@ $15 = (1 2 3 4 5 6)
 
 1. docs for `use-modules`: it's provided by guile, see <https://www.gnu.org/software/guile/manual/html_node/Using-Modules.html>
 1. docs for `use-service-modules`, `use-package-modules` & `use-system-modules`: No docs for them. But you can read their definition in source code: <https://git.savannah.gnu.org/cgit/guix.git/tree/gnu.scm#n143>
-1. Source code: <https://git.savannah.gnu.org/cgit/guix.git/tree/>
+1. Source code:
+   1. <https://git.savannah.gnu.org/cgit/guix.git/tree/>
+   1. <https://github.com/nonguix/nonguix/tree/master/nongnu>
 
 ### 4. Why `guix pull` so slow?(stuck in `computing guix derivation`)
 
@@ -100,4 +111,17 @@ To speed up the first reconfigure, see nonuix's official README for details.
 #### 5. `guix system reconfigure` so slow?(stuck in `build phase`)
 
 Same as above, you can add nonguix's substitutes to speed up the `guix system reconfigure` process.
+
+
+
+
+## References
+
+Other dotfiles that inspired me:
+
+- <https://github.com/engstrand-config/guix-dotfiles>
+- <https://github.com/migalmoreno/guix-config>
+- <https://github.com/Tass0sm/dotfiles>
+- <https://github.com/yveszoundi/guix-config>
+- <https://github.com/hiecaq/guix-config>
 
