@@ -21,6 +21,11 @@ Tutorials for Guix itself:
 - [GNU Guix Reference Manual](https://guix.gnu.org/en/manual/en/guix.html): read this first for installation and basic usage & setup.
 - [GNU Guix Cookbook](https://guix.gnu.org/en/cookbook/en/guix-cookbook.html): read this after you have your Guix installed and have some basic knowledge about Guix.
 
+## Key community projects
+
+- <https://github.com/abcdw/rde>
+- <https://github.com/nonguix/nonguix>
+
 ## Notes
 
 1. `'a`: a syntax sugar of `(quote a)`, a symbol `a` is not evaluated.
@@ -101,3 +106,13 @@ To speed up the first reconfigure, see nonuix's official README for details.
 
 Same as above, you can add nonguix's substitutes to speed up the `guix system reconfigure` process.
 
+
+
+
+## References
+
+Other dotfiles that inspired me:
+
+- <https://github.com/engstrand-config/guix-dotfiles>
+- <https://github.com/migalmoreno/guix-config>
+- <https://github.com/Tass0sm/dotfiles>
