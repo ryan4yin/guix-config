@@ -116,3 +116,6 @@ Other dotfiles that inspired me:
 - <https://github.com/engstrand-config/guix-dotfiles>
 - <https://github.com/migalmoreno/guix-config>
 - <https://github.com/Tass0sm/dotfiles>
+- <https://github.com/yveszoundi/guix-config>
+- <https://github.com/hiecaq/guix-config>
+
