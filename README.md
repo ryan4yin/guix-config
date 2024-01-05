@@ -2,7 +2,6 @@
 
 My dotfiles for GNU Guix
 
-
 ## Tutorials
 
 Tutorials for Guile Scheme Language:
@@ -31,10 +30,9 @@ Tutorials for Guix itself:
 1. `'a`: a syntax sugar of `(quote a)`, a symbol `a` is not evaluated.
 1. `#t` and `#f`: true and false
 1. `'()` or `nil`: empty list
-1. `(list arg1 arg2 …)` or `'(arg1 arg2 …)`: a linked list, 
+1. `(list arg1 arg2 …)` or `'(arg1 arg2 …)`: a linked list,
 1. `cons* arg1 arg2 …`: similar to `(list arg1 arg2 …)`, but its last cons cell is a dotted list, which does not have `nil` for its cdr.
    1. This function is called `list*` in some other Schemes and in Common LISP.
-
 
 ```bash
 scheme@(guile-user)> (cons* 1 2 3 4 5)
@@ -112,9 +110,6 @@ To speed up the first reconfigure, see nonuix's official README for details.
 
 Same as above, you can add nonguix's substitutes to speed up the `guix system reconfigure` process.
 
-
-
-
 ## References
 
 Other dotfiles that inspired me:
@@ -124,4 +119,3 @@ Other dotfiles that inspired me:
 - <https://github.com/Tass0sm/dotfiles>
 - <https://github.com/yveszoundi/guix-config>
 - <https://github.com/hiecaq/guix-config>
-
