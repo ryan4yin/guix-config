@@ -29,9 +29,9 @@ Tutorials for Guix itself:
 
 1. `'a`: a syntax sugar of `(quote a)`, a symbol `a` is not evaluated.
 1. `#t` and `#f`: true and false
-1. `'()` or `nil`: empty list
+1. `'()` or `null`: empty list
 1. `(list arg1 arg2 …)` or `'(arg1 arg2 …)`: a linked list,
-1. `cons* arg1 arg2 …`: similar to `(list arg1 arg2 …)`, but its last cons cell is a dotted list, which does not have `nil` for its cdr.
+1. `cons* arg1 arg2 …`: similar to `(list arg1 arg2 …)`, but its last cons cell is a dotted list, which does not have `null` for its cdr.
    1. This function is called `list*` in some other Schemes and in Common LISP.
 
 ```bash
@@ -46,7 +46,7 @@ scheme@(guile-user)> '(1 2)
 $7 = (1 2)
 scheme@(guile-user)> (cons 1 (cons 2 '()))
 $8 = (1 2)
-;; a list which does not have `nil` for its cdr is called a dotted list.
+;; a list which does not have `null` for its cdr is called a dotted list.
 scheme@(guile-user)> (cons 1 2)
 $9 = (1 . 2)
 ```
@@ -60,14 +60,14 @@ $9 = (1 . 2)
 ### 1. In which scenarios should I use `cons*` instead of `list` / `cons`?
 
 1. `cons` create a pair with two elements, the first element is its `car` and the second element its `cdr`.
-2. `(list a b ...)` create a linked list with multiple elements, and a `nil` is appended to the end of the list.
-3. `(cons* a b ... g h)` create a linked list with multiple elements, but the last element is not `nil`, it is the last element of the list.
+2. `(list a b ...)` create a linked list with multiple elements, and a `null` is appended to the end of the list.
+3. `(cons* a b ... g h)` create a linked list with multiple elements, but the last element is not `null`, it is the last element of the list.
 
 `cons*` is useful when you want to **insert multiple elements at the front of a list**. For example, `(cons* 1 2 3 '(4 5 6))` will insert `1 2 3` at the front of `(4 5 6)`, and the result is `(1 2 3 4 5 6)`.
 
 nonguix's installation description use `cons* ... %default-channels` to insert its channel infront of guix's default channels.
 
-if we use `list ... %default-channels`, the result have an extra `nil` at the end of the list, which is not what we want.
+if we use `list ... %default-channels`, the result have an extra `null` at the end of the list, which is not what we want.
 
 ```bash
 scheme@(guile-user) [1]> (list 1 2 3 (list 4 5 6))
