@@ -1,0 +1,170 @@
+#+title: guix-config
+#+author: ryan4yin
+
+:PROPERTIES:
+:CUSTOM_ID: guix-config
+:END:
+My dotfiles for GNU Guix
+
+** Tutorials
+:PROPERTIES:
+:CUSTOM_ID: tutorials
+:END:
+Tutorials for Guile Scheme Language:
+
+- [[https://spritely.institute/static/papers/scheme-primer.html][A Scheme Primer]]: for a basic understanding of Scheme
+- [[https://www.gnu.org/software/guile/manual/][Guile 3.0 Manual]]: The most important part of this manual is API
+  Reference, when in doubt, check the API Reference.
+
+How to practice Guile Scheme Language(on NixOS):
+
+#+begin_src sh
+nix shell nixpkgs#racket-minimal --command "racket"
+#+end_src
+
+Tutorials for Guix itself:
+
+- [[https://guix.gnu.org/en/manual/en/guix.html][GNU Guix Reference Manual]]: read this first for installation and basic
+  usage & setup.
+- [[https://guix.gnu.org/en/cookbook/en/guix-cookbook.html][GNU Guix Cookbook]]: read this after you have your Guix
+  installed and have some basic knowledge about Guix.
+
+How to use Guix on NixOS: [[https://github.com/ryan4yin/nix-config/blob/main/modules/nixos/desktop/guix.nix]]
+
+** Key community projects
+:PROPERTIES:
+:CUSTOM_ID: key-community-projects
+:END:
+- [[https://github.com/abcdw/rde]]
+- [[https://github.com/nonguix/nonguix]]
+
+
+** Notes
+:PROPERTIES:
+:CUSTOM_ID: notes
+:END:
+1. 'a: a syntax sugar of =(quote a)=, a symbol =a= is not evaluated.
+2. =#t= and =#f=: true and false
+3. '() or =null=: empty list
+4. =(list arg1 arg2 …)= or ='(arg1 arg2 …)=: a linked list,
+5. =cons* arg1 arg2 …=: similar to =(list arg1 arg2 …)=, but its last cons cell is a dotted list, which does not have
+   =null= for its cdr.
+   1. This function is called =list*= in some other Schemes and in Common LISP.
+
+#+begin_src sh
+scheme@(guile-user)> (cons* 1 2 3 4 5)
+$4 = (1 2 3 4 . 5)
+scheme@(guile-user)> (list 1 2 3 4 5)
+$5 = (1 2 3 4 5)
+scheme@(guile-user)> '(1 2 3 4 5)
+$6 = (1 2 3 4 5)
+
+scheme@(guile-user)> '(1 2)
+$7 = (1 2)
+scheme@(guile-user)> (cons 1 (cons 2 '()))
+$8 = (1 2)
+;; a list which does not have `null` for its cdr is called a dotted list.
+scheme@(guile-user)> (cons 1 2)
+$9 = (1 . 2)
+#+end_src
+
+** Guix Mirror in China
+:PROPERTIES:
+:CUSTOM_ID: guix-mirror-in-china
+:END:
+[[https://mirror.sjtu.edu.cn/docs/guix]]
+
+** FAQ
+:PROPERTIES:
+:CUSTOM_ID: faq
+:END:
+*** 1. In which scenarios should I use =cons*= instead of =list= / =cons=?
+:PROPERTIES:
+:CUSTOM_ID: in-which-scenarios-should-i-use-cons-instead-of-list-cons
+:END:
+1. =cons= create a pair with two elements, the first element is its =car= and the second element its =cdr=.
+2. =(list a b ...)= create a linked list with multiple elements, and a =null= is appended to the end of the list.
+3. =(cons* a b ... g h)= create a linked list with multiple elements, but the last element is not =null=, it is the last
+   element of the list.
+
+=cons*= is useful when you want to *insert multiple elements at the front of a list*. For example,
+=(cons* 1 2 3 '(4 5 6))= will insert =1 2 3= at the front of =(4 5 6)=, and the result is =(1 2 3 4 5 6)=.
+
+nonguix's installation description use =cons* ... %default-channels= to insert its channel infront of guix's default
+channels.
+
+if we use =list ... %default-channels=, the result have an extra =null= at the end of the list, which is not what we
+want.
+
+#+begin_src sh
+scheme@(guile-user) [1]> (list 1 2 3 (list 4 5 6))
+$13 = (1 2 3 (4 5 6))
+scheme@(guile-user) [1]> '(1 2 3 (4 5 6))
+$14 = (1 2 3 (4 5 6))
+scheme@(guile-user) [1]> (cons* 1 2 3 (list 4 5 6))
+$15 = (1 2 3 4 5 6)
+#+end_src
+
+*** 2. How to install package vai =config.scm=?
+:PROPERTIES:
+:CUSTOM_ID: how-to-install-package-vai-config.scm
+:END:
+1. =guix search <package-name>= to find the package's location.
+   1. For example, =guix search kitty= will show the package's location is =gnu/packages/terminals.scm=.
+2. add =(use-package-modules terminals)= to the top of =config.scm=.
+3. add =kitty= to the =packages= list in =config.scm=.
+
+*** 3. Documentation?
+:PROPERTIES:
+:CUSTOM_ID: documentation
+:END:
+1. docs for =use-modules=: it's provided by guile, see
+   [[https://www.gnu.org/software/guile/manual/html_node/Using-Modules.html]]
+2. docs for =use-service-modules=, =use-package-modules= & =use-system-modules=: No docs for them. But you can read
+   their definition in source code: [[https://git.savannah.gnu.org/cgit/guix.git/tree/gnu.scm#n143]]
+3. Source code:
+   1. [[https://git.savannah.gnu.org/cgit/guix.git/tree/]]
+   2. [[https://github.com/nonguix/nonguix/tree/master/nongnu]]
+
+*** 4. Why =guix pull= so slow?(stuck in =computing guix derivation=)
+:PROPERTIES:
+:CUSTOM_ID: why-guix-pull-so-slowstuck-in-computing-guix-derivation
+:END:
+
+#+begin_quote
+https://guix.gnu.org/manual/en/html_node/Channels-with-Substitutes.html
+
+#+end_quote
+
+When running =guix pull=, Guix will first compile the definitions of every available package. This is an expensive
+operation for which substitutes (see Substitutes) may be available.
+
+As for nonguix, you can add its official substitutes to speed up the =guix pull= process, search 'substitutes' in
+[[https://gitlab.com/nonguix/nonguix]] for details.
+
+#+begin_quote
+In NixOS, =nix= has no compilation phase and is a fully interpreted language, so =nix flake update= is much faster than
+=guix pull=.
+
+#+end_quote
+
+The substitutes you added into =config.scm= will only be available after the first =guix system reconfigure= finished!
+To speed up the first reconfigure, see nonuix's official README for details.
+
+**** 5. =guix system reconfigure= so slow?(stuck in =build phase=)
+:PROPERTIES:
+:CUSTOM_ID: guix-system-reconfigure-so-slowstuck-in-build-phase
+:END:
+Same as above, you can add nonguix's substitutes to speed up the =guix system reconfigure= process.
+
+** References
+:PROPERTIES:
+:CUSTOM_ID: references
+:END:
+Other dotfiles that inspired me:
+
+- [[https://github.com/engstrand-config/guix-dotfiles]]
+- [[https://github.com/migalmoreno/guix-config]]
+- [[https://github.com/Tass0sm/dotfiles]]
+- [[https://github.com/yveszoundi/guix-config]]
+- [[https://github.com/hiecaq/guix-config]]
