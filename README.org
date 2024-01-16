@@ -126,36 +126,37 @@ $15 = (1 2 3 4 5 6)
    1. [[https://git.savannah.gnu.org/cgit/guix.git/tree/]]
    2. [[https://github.com/nonguix/nonguix/tree/master/nongnu]]
 
-*** 4. Why =guix pull= so slow?(stuck in =computing guix derivation=)
+*** 4. Why is =guix pull= so sluggish? (Stuck in =computing guix derivation=)
 :PROPERTIES:
-:CUSTOM_ID: why-guix-pull-so-slowstuck-in-computing-guix-derivation
+:CUSTOM_ID: why-guix-pull-so-sluggish
 :END:
 
 #+begin_quote
-https://guix.gnu.org/manual/en/html_node/Channels-with-Substitutes.html
+Learn more: https://guix.gnu.org/manual/en/html_node/Channels-with-Substitutes.html
 
 #+end_quote
 
-When running =guix pull=, Guix will first compile the definitions of every available package. This is an expensive
-operation for which substitutes (see Substitutes) may be available.
+When executing =guix pull=, Guix initially compiles the definitions of every available package. This is a resource-intensive
+process for which substitutes (refer to Substitutes) may be accessible.
 
-As for nonguix, you can add its official substitutes to speed up the =guix pull= process, search 'substitutes' in
-[[https://gitlab.com/nonguix/nonguix]] for details.
+For nonguix, you can enhance the speed of the =guix pull= operation by incorporating its official substitutes. To delve into the details, refer to the 'substitutes' section in
+[[https://gitlab.com/nonguix/nonguix]].
 
 #+begin_quote
-In NixOS, =nix= has no compilation phase and is a fully interpreted language, so =nix flake update= is much faster than
-=guix pull=.
+In NixOS, =nix= undergoes no compilation phase and functions as a fully interpreted language. Consequently, =nix flake update= outpaces
+=guix pull= in terms of speed.
 
 #+end_quote
 
-The substitutes you added into =config.scm= will only be available after the first =guix system reconfigure= finished!
-To speed up the first reconfigure, see nonuix's official README for details.
+The substitutes you integrate into =config.scm= will become effective only after the initial completion of =guix system reconfigure=!
+For expediting the inaugural reconfiguration, consult nonuix's official README for guidance.
 
-**** 5. =guix system reconfigure= so slow?(stuck in =build phase=)
+*** 5. Why is =guix system reconfigure= so lethargic? (Stuck in =build phase=)
 :PROPERTIES:
-:CUSTOM_ID: guix-system-reconfigure-so-slowstuck-in-build-phase
+:CUSTOM_ID: guix-system-reconfigure-so-lethargic
 :END:
-Same as above, you can add nonguix's substitutes to speed up the =guix system reconfigure= process.
+Similar to the earlier point, you can hasten =guix system reconfigure= by introducing nonguix's substitutes.
+
 
 ** References
 :PROPERTIES:
