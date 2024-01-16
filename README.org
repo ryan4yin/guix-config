@@ -157,6 +157,14 @@ For expediting the inaugural reconfiguration, consult nonuix's official README f
 :END:
 Similar to the earlier point, you can hasten =guix system reconfigure= by introducing nonguix's substitutes.
 
+*** 6. Modularize Your Guix Configurationa
+
+Learn more: [[https://www.gnu.org/software/guile/manual/html_node/Modules.html]]
+
+
+*** 7. =ice-9/eval.scm:223:20: In procedure proc:=
+
+try =guix pull= and then =guix package -u= to update the packages.
 
 ** References
 :PROPERTIES:
@@ -169,3 +177,4 @@ Other dotfiles that inspired me:
 - [[https://github.com/Tass0sm/dotfiles]]
 - [[https://github.com/yveszoundi/guix-config]]
 - [[https://github.com/hiecaq/guix-config]]
+- [[https://github.com/rakino/Rosenthal]]: A certain Guix channel

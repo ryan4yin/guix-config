@@ -67,3 +67,14 @@ Still don't know how to make orgmode render the following correctly:
    ,,#+begin_example
    \quotesinglbase{}xxx
    #+end_example
+
+ChatGPT: Use =<code>'a</code>= instead:
+
+<code>'a</code>
+
+<code>aaa</code>
+
+
+| 'a |
+
+(quota 'a)
