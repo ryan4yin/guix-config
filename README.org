@@ -178,3 +178,7 @@ Other dotfiles that inspired me:
 - [[https://github.com/yveszoundi/guix-config]]
 - [[https://github.com/hiecaq/guix-config]]
 - [[https://github.com/rakino/Rosenthal]]: A certain Guix channel
+
+- [[https://spritely.institute/static/papers/scheme-primer.html]]
+- [[https://toys.whereis.xn--q9jyb4c/]]
+- [[https://systemcrafters.net/]]
