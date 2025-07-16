@@ -43,9 +43,9 @@ How to use Guix on NixOS: [[https://github.com/ryan4yin/nix-config/blob/main/mod
 :PROPERTIES:
 :CUSTOM_ID: notes
 :END:
-1. 'a: a syntax sugar of =(quote a)=, a symbol =a= is not evaluated.
+1. ='a=: a syntax sugar of =(quote a)=, a symbol =a= is not evaluated.
 2. =#t= and =#f=: true and false
-3. '() or =null=: empty list
+3. ='()= or =null=: empty list
 4. =(list arg1 arg2 …)= or ='(arg1 arg2 …)=: a linked list,
 5. =cons* arg1 arg2 …=: similar to =(list arg1 arg2 …)=, but its last cons cell is a dotted list, which does not have
    =null= for its cdr.
@@ -78,23 +78,21 @@ $9 = (1 . 2)
 :PROPERTIES:
 :CUSTOM_ID: faq
 :END:
-*** 1. In which scenarios should I use =cons*= instead of =list= / =cons=?
+*** 1. When should I use =cons*= instead of =list= / =cons=?
 :PROPERTIES:
-:CUSTOM_ID: in-which-scenarios-should-i-use-cons-instead-of-list-cons
+:CUSTOM_ID: when-should-i-use-cons-instead-of-list-cons
 :END:
-1. =cons= create a pair with two elements, the first element is its =car= and the second element its =cdr=.
-2. =(list a b ...)= create a linked list with multiple elements, and a =null= is appended to the end of the list.
-3. =(cons* a b ... g h)= create a linked list with multiple elements, but the last element is not =null=, it is the last
-   element of the list.
+1. =cons= creates a pair with two elements: its =car= and =cdr=
+2. =(list a b ...)= creates a linked list with multiple elements, and a =null= is appended to the end
+3. =(cons* a b ... g h)= creates a linked list with multiple elements, but the last element is not =null=
 
-=cons*= is useful when you want to *insert multiple elements at the front of a list*. For example,
-=(cons* 1 2 3 '(4 5 6))= will insert =1 2 3= at the front of =(4 5 6)=, and the result is =(1 2 3 4 5 6)=.
+=cons*= is useful when you want to *insert multiple elements at the front of a list*. For example:
+=(cons* 1 2 3 '(4 5 6))= will insert =1 2 3= at the front of =(4 5 6)=, resulting in =(1 2 3 4 5 6)=
 
-nonguix's installation description use =cons* ... %default-channels= to insert its channel infront of guix's default
+nonguix's installation description uses =cons* ... %default-channels= to insert its channel before Guix's default
 channels.
 
-if we use =list ... %default-channels=, the result have an extra =null= at the end of the list, which is not what we
-want.
+If we use =list ... %default-channels=, the result has an extra =null= at the end, which is not what we want.
 
 #+begin_src sh
 scheme@(guile-user) [1]> (list 1 2 3 (list 4 5 6))
@@ -105,26 +103,25 @@ scheme@(guile-user) [1]> (cons* 1 2 3 (list 4 5 6))
 $15 = (1 2 3 4 5 6)
 #+end_src
 
-*** 2. How to install package vai =config.scm=?
+*** 2. How to install packages via =config.scm=?
 :PROPERTIES:
-:CUSTOM_ID: how-to-install-package-vai-config.scm
+:CUSTOM_ID: how-to-install-packages-via-config-scm
 :END:
-1. =guix search <package-name>= to find the package's location.
-   1. For example, =guix search kitty= will show the package's location is =gnu/packages/terminals.scm=.
-2. add =(use-package-modules terminals)= to the top of =config.scm=.
-3. add =kitty= to the =packages= list in =config.scm=.
+1. =guix search <package-name>= to find the package's location
+   - For example, =guix search kitty= will show the package's location is =gnu/packages/terminals.scm=
+2. Add =(use-package-modules terminals)= to the top of =config.scm=
+3. Add =kitty= to the =packages= list in =config.scm=
 
 *** 3. Documentation?
 :PROPERTIES:
 :CUSTOM_ID: documentation
 :END:
-1. docs for =use-modules=: it's provided by guile, see
-   [[https://www.gnu.org/software/guile/manual/html_node/Using-Modules.html]]
-2. docs for =use-service-modules=, =use-package-modules= & =use-system-modules=: No docs for them. But you can read
+1. Documentation for =use-modules= (provided by Guile): [[https://www.gnu.org/software/guile/manual/html_node/Using-Modules.html]]
+2. Documentation for =use-service-modules=, =use-package-modules= & =use-system-modules=: No official docs, but you can read
    their definition in source code: [[https://git.savannah.gnu.org/cgit/guix.git/tree/gnu.scm#n143]]
 3. Source code:
-   1. [[https://git.savannah.gnu.org/cgit/guix.git/tree/]]
-   2. [[https://github.com/nonguix/nonguix/tree/master/nongnu]]
+   - [[https://git.savannah.gnu.org/cgit/guix.git/tree/]]
+   - [[https://github.com/nonguix/nonguix/tree/master/nongnu]]
 
 *** 4. Why is =guix pull= so sluggish? (Stuck in =computing guix derivation=)
 :PROPERTIES:
@@ -133,30 +130,35 @@ $15 = (1 2 3 4 5 6)
 
 #+begin_quote
 Learn more: https://guix.gnu.org/manual/en/html_node/Channels-with-Substitutes.html
-
 #+end_quote
 
 When executing =guix pull=, Guix initially compiles the definitions of every available package. This is a resource-intensive
-process for which substitutes (refer to Substitutes) may be accessible.
+process for which substitutes may be accessible.
 
-For nonguix, you can enhance the speed of the =guix pull= operation by incorporating its official substitutes. To delve into the details, refer to the 'substitutes' section in
-[[https://gitlab.com/nonguix/nonguix]].
+For nonguix, you can enhance the speed of =guix pull= by incorporating its official substitutes. Refer to the 'substitutes' section in [[https://gitlab.com/nonguix/nonguix]] for details.
 
 #+begin_quote
 In NixOS, =nix= undergoes no compilation phase and functions as a fully interpreted language. Consequently, =nix flake update= outpaces
 =guix pull= in terms of speed.
-
 #+end_quote
 
 The substitutes you integrate into =config.scm= will become effective only after the initial completion of =guix system reconfigure=!
-For expediting the inaugural reconfiguration, consult nonuix's official README for guidance.
+For expediting the inaugural reconfiguration, consult nonguix's official README.
 
-*** 5. Why is =guix system reconfigure= so lethargic? (Stuck in =build phase=)
+*** 5. Why is =guix system reconfigure= so slow? (Stuck in =build phase=)
 :PROPERTIES:
-:CUSTOM_ID: guix-system-reconfigure-so-lethargic
+:CUSTOM_ID: why-guix-system-reconfigure-so-slow
 :END:
-Similar to the earlier point, you can hasten =guix system reconfigure= by introducing nonguix's substitutes.
+Similar to the previous point, you can speed up =guix system reconfigure= by introducing nonguix's substitutes.
 
+*** 6. Modularize Your Guix Configuration
+
+Learn more: [[https://www.gnu.org/software/guile/manual/html_node/Modules.html]]
+
+
+*** 7. =ice-9/eval.scm:223:20: In procedure proc:=
+
+Try =guix pull= and then =guix package -u= to update the packages.
 
 ** References
 :PROPERTIES:
@@ -169,3 +171,8 @@ Other dotfiles that inspired me:
 - [[https://github.com/Tass0sm/dotfiles]]
 - [[https://github.com/yveszoundi/guix-config]]
 - [[https://github.com/hiecaq/guix-config]]
+- [[https://github.com/rakino/Rosenthal]]: A certain Guix channel
+
+- [[https://spritely.institute/static/papers/scheme-primer.html]]
+- [[https://toys.whereis.xn--q9jyb4c/]]
+- [[https://systemcrafters.net/]]
