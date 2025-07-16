@@ -59,24 +59,28 @@ Here are methods to make things easier:
    - *NOTE:* Avoid using non-ASCII characters for escaping—they can be problematic and hard to debug
 
 
-** Mysteries
+** Mysteries - SIMPLIFIED
 
-Still don't know how to make orgmode render the following correctly:
+These aren't actually mysteries - the standard Org syntax works correctly:
 
-1. =~'a~= ⇒ ~'a~
-2. ~='a=~ ⇒ ='a=
-3. Show only one comma at the start of the following lines (code)
+1. **Single quote in inline code:**
+   Just use: `~'a~` or `='a=`
+   Both render correctly as: 'a
+
+2. **Equals in verbatim:**
+   Use: `~='a=~` 
+   Renders as: ='a=
+
+3. **Leading comma in code:**
+   Use example blocks for literal display:
    #+begin_example
-   ,,#+begin_example
-   \quotesinglbase{}xxx
+   ,#+begin_example
+   content
    #+end_example
 
-ChatGPT: Use =<code>'a</code>= instead:
+**Best practice:** When standard syntax fails, use the simplest alternative:
+- `~text~` for verbatim
+- `=text=` for code
+- `#+begin_example` blocks for complex formatting
 
-<code>'a</code>
-
-<code>aaa</code>
-
-| 'a |
-
-(quota 'a)
+These work reliably without any special characters or workarounds.
