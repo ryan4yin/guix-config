@@ -11,31 +11,29 @@
 2. [[https://orgmode.org/manuals.htm][Org Mode Compact Guide]]
 3. [[https://github.com/Somelauw/evil-org-mode/blob/master/README.org#keybindings][Org Mode's evil keybinding]]
 
-
 * Tips
 
 ** Convert Markdown to Org Mode
 
 #+begin_src bash
-# enter a shel with pandoc available
+# enter a shell with pandoc available
 nix shell nixpkgs#pandoc
 # convert markdown into orgmode
-pandoc  --wrap=preserve --from markdown --to org README.md -o README.org
+pandoc --wrap=preserve --from markdown --to org README.md -o README.org
 #+end_src
 
-If you're familiar with markdown, learn orgmode via pandoc convert is a good idea.
+If you're familiar with markdown, learning orgmode via pandoc conversion is a good idea.
 
 
-** Special Symbols(Entities) & Escaping
+** Special Symbols (Entities) & Escaping
 
 [[https://orgmode.org/manual/Special-Symbols.html]]
 
-When migrating from Markdown to Org Mode, I have a big headache about how to escape some special symbols.
+When migrating from Markdown to Org Mode, escaping special symbols can be challenging.
 
-Here are three methods I found to make things easier:
+Here are methods to make things easier:
 
-
-1. Use the following syntax for multiline code.(use =,= at the start of lines inside the code block for escaping)
+1. Use the following syntax for multiline code (use =,= at the start of lines inside the code block for escaping)
    #+begin_example
    ,#+begin_example
    ,,#+begin_example
@@ -43,26 +41,31 @@ Here are three methods I found to make things easier:
    ,,#+end_example
    ,#+end_example
    #+end_example
-2. for one line code, colon followed by a space is a shortcut for =#+begine_src ... #+end_src=.
+
+2. For one-line code, colon followed by a space is a shortcut for =#+begin_src ... #+end_src=
    : : echo hello
+
 3. Use ~=this is good=~ or =~echo hello~= for inline code
-   1. ~=~ or =~= can be used inside a inline code block too: ~=~this is good~=~ will show =~this is good~=.
-   1. *NOTE:* GitHub do not support =~~xxx~~= or ~==xxx==~, so if the content contains ~=~, use =~= to quote it, and vice versa.
+   - ~=~ or =~= can be used inside an inline code block too: ~=~this is good~=~ will show =~this is good~=
+   - *NOTE:* GitHub does not support =~~xxx~~= or ~==xxx==~, so if the content contains ~=~, use =~= to quote it, and vice versa
+
 4. Use LaTeX-like syntax to insert special symbols: [[https://orgmode.org/worg/org-symbols.html][A table of symbols for Org-mode]]
-   1. For example, use =\alpha= to insert a \alpha symbol.
-   2. *NOTE:* If you do not want to add a space after the LaTex syntax, you have to add a ={}= after it,e.g. =\alpha{}xxx= will show \alpha{}xxx
-5. Add =#+OPTIONS ^:nil= at the start of the org file, to disable
-6. Insert a zero-width Unicode character to break the text's structure, so that the content won't be recognized as some orgmode syntax.
-   1. *NOTE:* I really don't like using non-ASCII characters for escaping, it's too tricky! An invisible space character can be a real headache at some point.
+   - For example, use =\alpha= to insert an \alpha symbol
+   - *NOTE:* If you do not want to add a space after the LaTeX syntax, add ={}= after it, e.g., =\alpha{}xxx= will show \alpha{}xxx
+
+5. Add =#+OPTIONS ^:nil= at the start of the org file to disable specific formatting
+
+6. Insert a zero-width Unicode character to break the text's structure, so the content won't be recognized as orgmode syntax
+   - *NOTE:* Avoid using non-ASCII characters for escaping—they can be problematic and hard to debug
 
 
 ** Mysteries
 
 Still don't know how to make orgmode render the following correctly:
 
-1. =~'a~= \Rightarrow ~'a~
-2. ~='a=~ \Rightarrow ='a=
-3. Show only one comma at the start of the following lines(code).
+1. =~'a~= ⇒ ~'a~
+2. ~='a=~ ⇒ ='a=
+3. Show only one comma at the start of the following lines (code)
    #+begin_example
    ,,#+begin_example
    \quotesinglbase{}xxx
@@ -73,7 +76,6 @@ ChatGPT: Use =<code>'a</code>= instead:
 <code>'a</code>
 
 <code>aaa</code>
-
 
 | 'a |
 
